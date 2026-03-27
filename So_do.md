@@ -207,3 +207,75 @@ Có thể thêm thanh toán, video, AI
 
 **Kết luận:**
 Chương 2 đã xác định đầy đủ chức năng, dữ liệu và luồng xử lý của hệ thống, làm cơ sở cho thiết kế ở Chương 3.
+
+---
+
+## 2.9 Use Case Diagram (Mermaid)
+
+```mermaid
+graph TD
+    User((User))
+    Admin((Admin))
+
+    UC1[Đăng ký]
+    UC2[Đăng nhập]
+    UC3[Xem khóa học]
+    UC4[Học bài]
+    UC5[Làm bài kiểm tra]
+    UC6[Xem tiến độ]
+
+    UC7[Quản lý khóa học]
+    UC8[Quản lý người dùng]
+    UC9[Thống kê]
+
+    User --> UC1
+    User --> UC2
+    User --> UC3
+    User --> UC4
+    User --> UC5
+    User --> UC6
+
+    Admin --> UC2
+    Admin --> UC7
+    Admin --> UC8
+    Admin --> UC9
+```
+
+---
+
+## 2.10 Activity Diagram (Luồng học tập)
+
+```mermaid
+flowchart TD
+    A[Đăng nhập] --> B[Xem khóa học]
+    B --> C[Chọn bài học]
+    C --> D[Học bài]
+    D --> E[Làm bài kiểm tra]
+    E --> F[Chấm điểm]
+    F --> G[Cập nhật tiến độ]
+```
+
+---
+
+## 2.11 Sequence Diagram (Đăng nhập)
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant View
+    participant Controller
+    participant Model
+    participant DB
+
+    User->>View: Nhập email + password
+    View->>Controller: Gửi request
+    Controller->>Model: Kiểm tra dữ liệu
+    Model->>DB: Query user
+    DB-->>Model: Trả kết quả
+    Model-->>Controller: OK / Fail
+    Controller-->>View: Hiển thị kết quả
+```
+
+---
+
+👉 Bạn có thể dán trực tiếp vào GitHub hoặc dùng draw.io để vẽ lại cho đẹp hơn khi nộp Word.
