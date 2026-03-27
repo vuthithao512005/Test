@@ -1,132 +1,209 @@
-HƯƠNG 3: THIẾT KẾ HỆ THỐNG
-3.1 Tổng quan thiết kế
+# CHƯƠNG 2: PHÂN TÍCH HỆ THỐNG – E-LEARNING MINI
 
-Dựa trên kết quả phân tích ở Chương 2, hệ thống E-Learning Mini được thiết kế theo hướng:
+## 2.1 Tổng quan
 
-Tách biệt rõ giao diện – xử lý – dữ liệu
-Đảm bảo dễ mở rộng và bảo trì
-Phù hợp với mô hình MVC
+Phân tích hệ thống nhằm xác định rõ các chức năng, yêu cầu và cách thức hoạt động của hệ thống trước khi thiết kế và triển khai.
 
-Hệ thống bao gồm 3 thành phần chính:
+Hệ thống E-Learning Mini tập trung vào:
 
-Presentation Layer (View) – Giao diện người dùng
-Business Logic Layer (Controller) – Xử lý nghiệp vụ
-Data Layer (Model) – Tương tác cơ sở dữ liệu
-3.2 Kiến trúc hệ thống (MVC)
-Mô hình tổng thể:
-User → View → Controller → Model → Database
-                        ↑
-                        ↓
-                      View
-Diễn giải:
-Người dùng thao tác trên giao diện (View)
-Yêu cầu được gửi đến Controller
-Controller xử lý logic
-Gọi Model để truy vấn dữ liệu
-Trả dữ liệu về View để hiển thị
-3.3 Thiết kế cơ sở dữ liệu (ERD)
-3.3.1 Các thực thể chính
+* Xác định actor
+* Xây dựng Use Case
+* Đặc tả chức năng (SRS)
+* Phân tích dữ liệu và luồng xử lý
 
-Hệ thống gồm các bảng chính:
+---
 
-Users
-Courses
-Lessons
-Quizzes
-Questions
-Progress
-3.3.2 Mối quan hệ giữa các bảng
-Users (1) —— (n) Progress (n) —— (1) Courses  
-Courses (1) —— (n) Lessons  
-Lessons (1) —— (n) Quizzes  
-Quizzes (1) —— (n) Questions  
+## 2.2 Actor (Tác nhân)
 
-👉 Giải thích:
+### 2.2.1 Admin
 
-1 user học nhiều khóa học → bảng Progress
-1 khóa học có nhiều bài học
-1 bài học có thể có bài kiểm tra
-1 bài kiểm tra có nhiều câu hỏi
-3.4 Thiết kế bảng dữ liệu chi tiết
-3.4.1 Bảng Users
-Tên trường	Kiểu dữ liệu	Mô tả
-id	INT (PK)	ID người dùng
-name	VARCHAR	Tên
-email	VARCHAR	Email
-password	VARCHAR	Mật khẩu
-role	ENUM	admin / user
-3.4.2 Bảng Courses
-Trường	Kiểu	Mô tả
-id	INT	ID khóa học
-title	VARCHAR	Tên khóa học
-description	TEXT	Mô tả
-3.4.3 Bảng Lessons
-Trường	Kiểu	Mô tả
-id	INT	ID bài học
-course_id	INT	FK
-title	VARCHAR	Tên bài
-content	TEXT	Nội dung
-3.4.4 Bảng Quizzes
-Trường	Kiểu
-id	INT
-lesson_id	INT
-3.4.5 Bảng Questions
-Trường	Kiểu
-id	INT
-quiz_id	INT
-question	TEXT
-option_a	VARCHAR
-option_b	VARCHAR
-option_c	VARCHAR
-option_d	VARCHAR
-correct_answer	CHAR
-3.4.6 Bảng Progress
-Trường	Kiểu
-user_id	INT
-course_id	INT
-progress	INT (%)
-3.5 Thiết kế giao diện (UI Design)
-3.5.1 Trang người dùng
-Trang chủ
-Danh sách khóa học
-Trang bài học
-Trang làm bài kiểm tra
-Trang tiến độ
+* Quản lý khóa học
+* Quản lý bài học
+* Quản lý người dùng
+* Xem thống kê
 
-👉 Đặc điểm:
+### 2.2.2 Người dùng (User)
 
-Giao diện đơn giản, dễ dùng
-Responsive cơ bản
-3.5.2 Trang Admin
-Dashboard
-Quản lý khóa học
-Quản lý người dùng
-Thống kê
+* Đăng ký / đăng nhập
+* Xem khóa học
+* Học bài
+* Làm bài kiểm tra
+* Xem tiến độ
 
-👉 Thiết kế:
+---
 
-Menu sidebar
-Bảng dữ liệu (table)
-3.6 Thiết kế luồng xử lý
-Luồng đăng ký
-User → Form → Validate → Database → Success
-Luồng học tập
-User → Chọn khóa học → Xem bài học → Làm quiz → Lưu tiến độ
-Luồng quản lý (Admin)
-Admin → CRUD khóa học → Update DB → Hiển thị
-3.7 Thiết kế bảo mật (điểm cộng mạnh)
+## 2.3 Danh sách Use Case
 
-Hệ thống áp dụng các nguyên tắc:
+### Admin
 
-Mã hóa mật khẩu (MD5 / bcrypt)
-Kiểm tra dữ liệu đầu vào
-Session login
-Phân quyền user/admin
-3.8 Thiết kế mở rộng hệ thống
+| Mã   | Tên                |
+| ---- | ------------------ |
+| UC01 | Đăng nhập          |
+| UC02 | Quản lý khóa học   |
+| UC03 | Quản lý bài học    |
+| UC04 | Quản lý người dùng |
+| UC05 | Xem thống kê       |
 
-Hệ thống có thể mở rộng thêm:
+### User
 
-Thanh toán online
-Upload video bài học
-API mobile
-AI gợi ý khóa học
+| Mã   | Tên              |
+| ---- | ---------------- |
+| UC06 | Đăng ký          |
+| UC07 | Đăng nhập        |
+| UC08 | Xem khóa học     |
+| UC09 | Học bài          |
+| UC10 | Làm bài kiểm tra |
+| UC11 | Xem tiến độ      |
+
+---
+
+## 2.4 Đặc tả Use Case (SRS rút gọn)
+
+### UC06 – Đăng ký
+
+* Actor: User
+* Input: name, email, password
+* Output: thành công / lỗi
+
+Luồng chính:
+
+1. Nhập thông tin
+2. Kiểm tra hợp lệ
+3. Lưu DB
+4. Thông báo
+
+Luồng lỗi:
+
+* Thiếu dữ liệu
+* Email sai
+* Email tồn tại
+
+---
+
+### UC07 – Đăng nhập
+
+* Actor: User/Admin
+
+Luồng chính:
+
+1. Nhập email + password
+2. Kiểm tra
+3. Đăng nhập thành công
+
+Luồng lỗi:
+
+* Sai mật khẩu
+* Không tồn tại
+
+---
+
+### UC02 – Quản lý khóa học
+
+* Actor: Admin
+
+Chức năng:
+
+* Thêm
+* Sửa
+* Xóa
+
+---
+
+### UC09 – Học bài
+
+* Actor: User
+
+Luồng:
+
+1. Chọn khóa học
+2. Chọn bài
+3. Xem nội dung
+
+---
+
+### UC10 – Làm bài kiểm tra
+
+* Actor: User
+
+Luồng:
+
+1. Hiển thị câu hỏi
+2. Chọn đáp án
+3. Nộp bài
+4. Chấm điểm
+
+---
+
+### UC11 – Xem tiến độ
+
+* Actor: User
+* Hiển thị % hoàn thành
+
+---
+
+## 2.5 Yêu cầu hệ thống
+
+### 2.5.1 Chức năng
+
+* Đăng ký / đăng nhập
+* CRUD khóa học
+* Học online
+* Làm quiz
+* Theo dõi tiến độ
+
+### 2.5.2 Phi chức năng
+
+* Giao diện dễ dùng
+* Tốc độ nhanh
+* Bảo mật
+* Ổn định
+
+---
+
+## 2.6 Phân tích dữ liệu
+
+Các bảng chính:
+
+* Users
+* Courses
+* Lessons
+* Quizzes
+* Questions
+* Progress
+
+---
+
+## 2.7 Luồng hệ thống
+
+### User
+
+Đăng nhập → Xem khóa học → Học → Làm quiz → Lưu tiến độ
+
+### Admin
+
+Đăng nhập → Quản lý → Thống kê
+
+---
+
+## 2.8 Điểm nổi bật hệ thống
+
+### 1. Chu trình học tập hoàn chỉnh
+
+Học → Kiểm tra → Tiến độ
+
+### 2. Theo dõi tiến độ
+
+Hiển thị % hoàn thành
+
+### 3. Phân quyền rõ ràng
+
+Admin / User
+
+### 4. Dễ mở rộng
+
+Có thể thêm thanh toán, video, AI
+
+---
+
+**Kết luận:**
+Chương 2 đã xác định đầy đủ chức năng, dữ liệu và luồng xử lý của hệ thống, làm cơ sở cho thiết kế ở Chương 3.
