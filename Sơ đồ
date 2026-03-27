@@ -1,0 +1,4 @@
+User → View → Controller → Model → Database
+                        ↑
+                        ↓
+                      View
