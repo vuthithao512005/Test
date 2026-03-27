@@ -277,5 +277,54 @@ sequenceDiagram
 ```
 
 ---
+graph LR
 
+%% ACTORS
+User((User))
+Admin((Admin))
+
+%% SYSTEM
+subgraph E-Learning System
+
+%% USER USE CASE
+UC1[Đăng ký]
+UC2[Đăng nhập]
+UC3[Xem khóa học]
+UC4[Xem chi tiết khóa học]
+UC5[Học bài]
+UC6[Làm bài kiểm tra]
+UC7[Xem tiến độ]
+
+%% ADMIN USE CASE
+UC8[Quản lý khóa học]
+UC9[Thêm khóa học]
+UC10[Sửa khóa học]
+UC11[Xóa khóa học]
+
+UC12[Quản lý bài học]
+UC13[Quản lý người dùng]
+UC14[Xem thống kê]
+
+end
+
+%% RELATION USER
+User --> UC1
+User --> UC2
+User --> UC3
+User --> UC4
+User --> UC5
+User --> UC6
+User --> UC7
+
+%% RELATION ADMIN
+Admin --> UC2
+Admin --> UC8
+Admin --> UC12
+Admin --> UC13
+Admin --> UC14
+
+%% INCLUDE (quan trọng)
+UC8 --> UC9
+UC8 --> UC10
+UC8 --> UC11
 👉 Bạn có thể dán trực tiếp vào GitHub hoặc dùng draw.io để vẽ lại cho đẹp hơn khi nộp Word.
