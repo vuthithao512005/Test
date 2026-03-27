@@ -1,4 +1,132 @@
+HƯƠNG 3: THIẾT KẾ HỆ THỐNG
+3.1 Tổng quan thiết kế
+
+Dựa trên kết quả phân tích ở Chương 2, hệ thống E-Learning Mini được thiết kế theo hướng:
+
+Tách biệt rõ giao diện – xử lý – dữ liệu
+Đảm bảo dễ mở rộng và bảo trì
+Phù hợp với mô hình MVC
+
+Hệ thống bao gồm 3 thành phần chính:
+
+Presentation Layer (View) – Giao diện người dùng
+Business Logic Layer (Controller) – Xử lý nghiệp vụ
+Data Layer (Model) – Tương tác cơ sở dữ liệu
+3.2 Kiến trúc hệ thống (MVC)
+Mô hình tổng thể:
 User → View → Controller → Model → Database
                         ↑
                         ↓
                       View
+Diễn giải:
+Người dùng thao tác trên giao diện (View)
+Yêu cầu được gửi đến Controller
+Controller xử lý logic
+Gọi Model để truy vấn dữ liệu
+Trả dữ liệu về View để hiển thị
+3.3 Thiết kế cơ sở dữ liệu (ERD)
+3.3.1 Các thực thể chính
+
+Hệ thống gồm các bảng chính:
+
+Users
+Courses
+Lessons
+Quizzes
+Questions
+Progress
+3.3.2 Mối quan hệ giữa các bảng
+Users (1) —— (n) Progress (n) —— (1) Courses  
+Courses (1) —— (n) Lessons  
+Lessons (1) —— (n) Quizzes  
+Quizzes (1) —— (n) Questions  
+
+👉 Giải thích:
+
+1 user học nhiều khóa học → bảng Progress
+1 khóa học có nhiều bài học
+1 bài học có thể có bài kiểm tra
+1 bài kiểm tra có nhiều câu hỏi
+3.4 Thiết kế bảng dữ liệu chi tiết
+3.4.1 Bảng Users
+Tên trường	Kiểu dữ liệu	Mô tả
+id	INT (PK)	ID người dùng
+name	VARCHAR	Tên
+email	VARCHAR	Email
+password	VARCHAR	Mật khẩu
+role	ENUM	admin / user
+3.4.2 Bảng Courses
+Trường	Kiểu	Mô tả
+id	INT	ID khóa học
+title	VARCHAR	Tên khóa học
+description	TEXT	Mô tả
+3.4.3 Bảng Lessons
+Trường	Kiểu	Mô tả
+id	INT	ID bài học
+course_id	INT	FK
+title	VARCHAR	Tên bài
+content	TEXT	Nội dung
+3.4.4 Bảng Quizzes
+Trường	Kiểu
+id	INT
+lesson_id	INT
+3.4.5 Bảng Questions
+Trường	Kiểu
+id	INT
+quiz_id	INT
+question	TEXT
+option_a	VARCHAR
+option_b	VARCHAR
+option_c	VARCHAR
+option_d	VARCHAR
+correct_answer	CHAR
+3.4.6 Bảng Progress
+Trường	Kiểu
+user_id	INT
+course_id	INT
+progress	INT (%)
+3.5 Thiết kế giao diện (UI Design)
+3.5.1 Trang người dùng
+Trang chủ
+Danh sách khóa học
+Trang bài học
+Trang làm bài kiểm tra
+Trang tiến độ
+
+👉 Đặc điểm:
+
+Giao diện đơn giản, dễ dùng
+Responsive cơ bản
+3.5.2 Trang Admin
+Dashboard
+Quản lý khóa học
+Quản lý người dùng
+Thống kê
+
+👉 Thiết kế:
+
+Menu sidebar
+Bảng dữ liệu (table)
+3.6 Thiết kế luồng xử lý
+Luồng đăng ký
+User → Form → Validate → Database → Success
+Luồng học tập
+User → Chọn khóa học → Xem bài học → Làm quiz → Lưu tiến độ
+Luồng quản lý (Admin)
+Admin → CRUD khóa học → Update DB → Hiển thị
+3.7 Thiết kế bảo mật (điểm cộng mạnh)
+
+Hệ thống áp dụng các nguyên tắc:
+
+Mã hóa mật khẩu (MD5 / bcrypt)
+Kiểm tra dữ liệu đầu vào
+Session login
+Phân quyền user/admin
+3.8 Thiết kế mở rộng hệ thống
+
+Hệ thống có thể mở rộng thêm:
+
+Thanh toán online
+Upload video bài học
+API mobile
+AI gợi ý khóa học
