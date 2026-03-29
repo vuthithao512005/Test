@@ -442,8 +442,8 @@ graph LR
 User((User)) --> UC06[Làm bài kiểm tra]
 UC06 --> UC061[Chọn đáp án]
 UC06 --> UC062[Nộp bài]
-UC06 -->|<<include>>| UC063[Chấm điểm]
-UC06 -->|<<extend>>| UC064[Làm lại bài]
+UC06 --> UC063[Chấm điểm]
+UC06 --> UC064[Làm lại bài]
 ```
 
 | Thành phần | Nội dung |
